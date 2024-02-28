@@ -3,8 +3,8 @@ const sequelize = require('./db');
 
 const employee_tbl = sequelize.define('employee_tbl', {
   employeeId: {
-    type: DataTypes.UUID,
     primaryKey: true,
+    type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
     unique: true,
     allowNull: false
@@ -12,7 +12,6 @@ const employee_tbl = sequelize.define('employee_tbl', {
   email: {
     type: DataTypes.STRING(30),
     allowNull: false,
-    unique: true,
     validate: {
       isEmail: true,
     },

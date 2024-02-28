@@ -3,16 +3,15 @@ const sequelize = require('./db');
 
 const hrmUser_tbl = sequelize.define('hrmUser_tbl', {
   userId: {
-    type: DataTypes.UUID,
     primaryKey: true,
-    unique: true,
+    type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
+    unique: true,
     allowNull: false
   },  
   email: {
     type: DataTypes.STRING(30),
     allowNull: false,
-    unique: true,
     validate: {
       isEmail: true,
     },
