@@ -1,0 +1,37 @@
+const { DataTypes } = require('sequelize');
+const sequelize = require('./db');
+
+const position_tbl = sequelize.define('position_tbl', {
+  position_id: {
+    type: DataTypes.UUID,
+    primaryKey: true,
+    defaultValue: DataTypes.UUIDV4,
+    allowNull: false
+  },
+  positionName: {
+    type: DataTypes.STRING(80),
+    allowNull: false,
+  },
+  addedBy: {
+    type: DataTypes.STRING(100),
+    allowNull: false,
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    allowNull: false,
+    defaultValue: DataTypes.NOW,
+  },
+  updatedAt: {
+    type: DataTypes.DATE,
+    allowNull: false,
+    defaultValue: DataTypes.NOW,
+  },
+}
+// ,{
+//   force: true
+// }
+
+);
+
+
+module.exports = { position_tbl };
