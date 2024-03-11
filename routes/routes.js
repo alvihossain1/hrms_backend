@@ -1,6 +1,6 @@
 const express = require('express');
 const { hrmUserRegister , hrmUserLogin } = require('../controllers/hrmUserController');
-const { employeeRegistration, getEmployeeData, updateEmployee } = require('../controllers/employeeController');
+const { employeeRegistration, getEmployeeData, updateEmployee, removeEmployee } = require('../controllers/employeeController');
 const { addDepartment, getDepartments, deleteDepartment } = require('../controllers/departmentController');
 const { addPosition, getPositions, deletePosition } = require('../controllers/positionController');
 const { multerHrmProfileUpload, multerEmployeeProfileUpload } = require('../controllers/uploadsController');
@@ -19,7 +19,8 @@ router.post("/user/position", addPosition);
 router.get("/user/position", getPositions);
 
 router.post("/employee/employee", multerEmployeeProfileUpload().single("image"), employeeRegistration);
-router.put("/employee/employee", updateEmployee);
 router.get("/employee/employee", getEmployeeData);
+router.put("/employee/employee", updateEmployee);
+router.delete("/employee/employee", removeEmployee);
 
 module.exports = router;

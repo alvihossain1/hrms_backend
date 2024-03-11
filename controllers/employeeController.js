@@ -74,6 +74,7 @@ exports.updateEmployee = async (req, res) => {
       emp_data.lname = user.lname;
       emp_data.contactNo = user.contactNo;
       emp_data.address = user.address;
+      emp_data.stateName = user.stateName;
       emp_data.employeeStatus = user.employeeStatus;
       emp_data.departmentName = user.departmentName;
       emp_data.positionName = user.positionName;
@@ -83,6 +84,26 @@ exports.updateEmployee = async (req, res) => {
 
     } else {
       res.send({ status: 500, data: "Data Found error." });
+    }
+  } catch (error) {
+    res.send({ status: 500, data: "There was an error." });
+  }
+};
+
+exports.removeEmployee = async (req, res) => {
+  try {
+    const user = req.body;
+    console.log(user);
+    const db_data = await employee_tbl.destroy({
+      where: {
+        employeeId: req.body.employeeId
+      },
+    });
+    if (db_data === 1) {
+      res.send({ status: 200, data: db_data });
+    }
+    else {
+      res.send({ status: 300, data: db_data });
     }
   } catch (error) {
     res.send({ status: 500, data: "There was an error." });
