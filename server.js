@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
     res.send("<h1 style='text-align: center; background-color: olive;'>Homepage here! yay!</h1>");
 })
 
-const path = require('path')
+const path = require('path');
 app.use('/public', express.static(path.join(__dirname, 'public')))
 
 const port = 4000;

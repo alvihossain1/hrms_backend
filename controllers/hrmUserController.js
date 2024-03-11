@@ -17,7 +17,7 @@ exports.hrmUserRegister = async (req, res) => {
     }
     else{
       fs.unlinkSync(url);
-      res.send({status: 500, data: `Couldn't create, ${user.email} HRM already exists`});
+      res.send({status: 300, data: `Couldn't create, ${user.email} HRM already exists`});
     }    
   } catch (error) {
     res.send({status: 500, data: "There was an error during the registration process"});
