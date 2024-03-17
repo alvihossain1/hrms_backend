@@ -28,6 +28,9 @@ const department_tbl = sequelize.define('department_tbl', {
   },
 }
 // ,{
+//   alter: true
+// }
+// ,{
 //   force: true
 // }
 

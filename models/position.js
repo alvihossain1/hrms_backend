@@ -28,6 +28,9 @@ const position_tbl = sequelize.define('position_tbl', {
   },
 }
 // ,{
+//   alter: true
+// }
+// ,{
 //   force: true
 // }
 

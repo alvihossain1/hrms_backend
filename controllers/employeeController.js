@@ -1,5 +1,6 @@
 const { employee_tbl } = require('../models/employee');
 const fs = require('fs');
+const { salary_tbl } = require('../models/salary');
 
 exports.employeeRegistration = async (req, res) => {
   try {
@@ -47,7 +48,14 @@ exports.employeeRegistration = async (req, res) => {
 exports.getEmployeeData = async (req, res) => {
   try {
     console.log(req.body)
-    const db_data = await employee_tbl.findAll();
+    const db_data = await employee_tbl.findAll(
+      {
+        include: [
+          { model: salary_tbl}
+        ],
+        // limit: 1
+      }
+    );
     if (db_data.length === 0) {
       res.send({ status: 0, data: "not found" })
     }
@@ -93,13 +101,15 @@ exports.updateEmployee = async (req, res) => {
 exports.removeEmployee = async (req, res) => {
   try {
     const user = req.body;
+    const url = "public"+user.image_url.split("public")[1];
     console.log(user);
     const db_data = await employee_tbl.destroy({
       where: {
-        employeeId: req.body.employeeId
+        employeeId: user.employeeId
       },
     });
     if (db_data === 1) {
+      // fs.unlinkSync(url);
       res.send({ status: 200, data: db_data });
     }
     else {
