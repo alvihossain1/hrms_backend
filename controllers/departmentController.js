@@ -6,7 +6,7 @@ exports.addDepartment = async (req, res) => {
       console.log(data)
       const [db_data, created] = await department_tbl.findOrCreate({
         where: {departmentName: data.departmentName},
-        defaults: { department_id: "81"+Date.now(), departmentName: data.departmentName, addedBy: data.name }
+        defaults: { departmentId: "81"+Date.now(), departmentName: data.departmentName, addedBy: data.name }
       });
       if(created){
         res.send({status: 200, data: `${data.departmentName} department added successfully.`});
@@ -43,7 +43,7 @@ exports.addDepartment = async (req, res) => {
       try {      
         const db_data = await department_tbl.destroy({
           where: {
-            department_id: id
+            departmentId: id
           },
         });
         if(db_data === 1){

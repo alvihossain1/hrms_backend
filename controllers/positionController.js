@@ -6,7 +6,7 @@ exports.addPosition = async (req, res) => {
       console.log(data)
       const [db_data, created] = await position_tbl.findOrCreate({
         where: {positionName: data.positionName},
-        defaults: { position_id: "82"+Date.now(), positionName: data.positionName, addedBy: data.name }
+        defaults: { positionId: "82"+Date.now(), positionName: data.positionName, addedBy: data.name }
       });
       if(created){
         res.send({status: 200, data: `${data.positionName} position added successfully.`});
@@ -44,7 +44,7 @@ exports.addPosition = async (req, res) => {
       try {      
         const db_data = await position_tbl.destroy({
           where: {
-            position_id: id
+            positionId: id
           },
         });        
         if(db_data === 1){
