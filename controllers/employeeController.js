@@ -35,7 +35,10 @@ exports.employeeRegistration = async (req, res) => {
       res.send({ status: 200, data: "Employee Registered Successfully." });
     }
     else {
-      fs.unlinkSync(url);
+      try{
+        fs.unlinkSync(url);
+      }
+      catch(err){}
       res.send({ status: 300, data: `Couldn't create, ${user.email} already exists` });
     }
 
@@ -86,6 +89,7 @@ exports.updateEmployee = async (req, res) => {
       emp_data.employeeStatus = user.employeeStatus;
       emp_data.departmentName = user.departmentName;
       emp_data.positionName = user.positionName;
+      emp_data.terminationDate = user.terminationDate;
 
       emp_data.save();
       res.send({ status: 200, data: "Updated Employee Record Successfully." });
@@ -109,7 +113,10 @@ exports.removeEmployee = async (req, res) => {
       },
     });
     if (db_data === 1) {
-      // fs.unlinkSync(url);
+      try{
+        fs.unlinkSync(url);
+      }
+      catch(err){}
       res.send({ status: 200, data: db_data });
     }
     else {

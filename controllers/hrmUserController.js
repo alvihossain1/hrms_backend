@@ -28,7 +28,7 @@ exports.hrmUserLogin = async (req, res) => {
   try {
     console.log(req.body)
     const db_data = await hrmUser_tbl.findAll({
-      attributes: ["email", "fname", "lname", "image_url"],
+      attributes: ["email", "fname", "lname", "image_url", "userId"],
       where: {        
         email: req.body.email.toString(),
         password: req.body.password.toString(),
