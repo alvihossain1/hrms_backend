@@ -38,7 +38,7 @@ exports.addAttendance = async (req, res) => {
         SELECT employeeId FROM attendance_tbls WHERE date = '${date}'
       )`);
       if (db_data.length === 0) {
-        res.send({ status: 0, data: "not found" })
+        res.send({ status: 0, data: [] })
       }
       else {
         let data_arr = JSON.parse(JSON.stringify(db_data));
@@ -55,6 +55,30 @@ exports.addAttendance = async (req, res) => {
   };
 
 
+  exports.getEmployeeByDateAttended = async (req, res) => {
+    try {
+      const date = req.params.date
+      console.log("DATE::  ", date);
+      
+      const db_data = await sequelize.query(`SELECT employeeId, fname, lname, email, image_url FROM employee_tbls WHERE employeeId IN (
+        SELECT employeeId FROM attendance_tbls WHERE date = '${date}'
+      )`);
+      if (db_data.length === 0) {
+        res.send({ status: 0, data: "not found" })
+      }
+      else {
+        let data_arr = JSON.parse(JSON.stringify(db_data));
+        data_arr = data_arr[0]
+        data_arr = data_arr.filter(data => {
+          data.image_url = process.env.SERVER_URL + "/" + data.image_url;
+          return data;
+        });
+        res.send({ status: 200, data: data_arr });
+      }
+    } catch (error) {
+      res.send({status: 500, data: "There was an error."});
+    }
+  };
   
 
 //   exports.updateSalary = async (req, res) => {
