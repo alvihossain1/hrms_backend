@@ -1,5 +1,6 @@
 const { attendance_tbl } = require('../models/attendance');
 const sequelize = require('../models/db');
+const { employee_tbl } = require('../models/employee');
 
 exports.addAttendance = async (req, res) => {
     try {
@@ -37,7 +38,7 @@ exports.addAttendance = async (req, res) => {
       const db_data = await sequelize.query(`SELECT employeeId, fname, lname, email, image_url FROM employee_tbls WHERE employeeId NOT IN (
         SELECT employeeId FROM attendance_tbls WHERE date = '${date}'
       )`);
-      if (db_data.length === 0) {
+      if (db_data[0].length === 0 === 0) {
         res.send({ status: 0, data: [] })
       }
       else {
@@ -60,15 +61,21 @@ exports.addAttendance = async (req, res) => {
       const date = req.params.date
       console.log("DATE::  ", date);
       
-      const db_data = await sequelize.query(`SELECT employeeId, fname, lname, email, image_url FROM employee_tbls WHERE employeeId IN (
-        SELECT employeeId FROM attendance_tbls WHERE date = '${date}'
-      )`);
+      const db_data = await employee_tbl.findAll({
+        attributes: ['employeeId', 'fname', 'lname', 'email', 'image_url'],
+        include: {
+          model: attendance_tbl,
+          where: {
+            date: date
+          }
+        }
+      });
+
       if (db_data.length === 0) {
-        res.send({ status: 0, data: "not found" })
+        res.send({ status: 0, data: [] })
       }
       else {
         let data_arr = JSON.parse(JSON.stringify(db_data));
-        data_arr = data_arr[0]
         data_arr = data_arr.filter(data => {
           data.image_url = process.env.SERVER_URL + "/" + data.image_url;
           return data;

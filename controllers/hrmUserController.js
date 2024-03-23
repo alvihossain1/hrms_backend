@@ -34,7 +34,7 @@ exports.hrmUserLogin = async (req, res) => {
         password: req.body.password.toString(),
       },
     });
-    if(db_data.length === 0){
+    if(db_data[0].length === 0){
       res.send({status: 500, data: "not found"})
     }
     else{

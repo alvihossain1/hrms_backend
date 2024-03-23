@@ -59,7 +59,7 @@ exports.getEmployeeData = async (req, res) => {
         // limit: 1
       }
     );
-    if (db_data.length === 0) {
+    if (db_data[0].length === 0) {
       res.send({ status: 0, data: "not found" })
     }
     else {
