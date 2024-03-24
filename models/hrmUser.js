@@ -25,7 +25,7 @@ const hrmUser_tbl = sequelize.define('hrmUser_tbl', {
     allowNull: false,
   },
   password: {
-    type: DataTypes.STRING(30),
+    type: DataTypes.STRING(100),
     allowNull: false,
   },
   image_url: {

@@ -75,6 +75,28 @@ exports.getEmployeeData = async (req, res) => {
   }
 };
 
+exports.getEmployeeDataMinFields = async (req, res) => {
+  try {
+    console.log(req.body)
+    const db_data = await employee_tbl.findAll(
+      {attributes: ['employeeId', 'fname', 'lname', 'email', 'image_url']}
+    );
+    if (db_data[0].length === 0) {
+      res.send({ status: 0, data: "not found" })
+    }
+    else {
+      let data_arr = JSON.parse(JSON.stringify(db_data));
+      data_arr = data_arr.filter(data => {
+        data.image_url = process.env.SERVER_URL + "/" + data.image_url;
+        return data;
+      });
+      res.send({ status: 200, data: data_arr });
+    }
+  } catch (error) {
+    res.send({ status: 500, data: "There was an error during the registration process" });
+  }
+};
+
 exports.updateEmployee = async (req, res) => {
   try {
     const user = req.body;
