@@ -6,6 +6,7 @@ const { addPosition, getPositions, deletePosition } = require('../controllers/po
 const { multerHrmProfileUpload, multerEmployeeProfileUpload } = require('../controllers/uploadsController');
 const { addSalary, updateSalary } = require('../controllers/salaryController');
 const { addAttendance, getEmployeeByDateAttendance, getEmployeeByDateAttended, addAttendanceManual } = require('../controllers/attendanceController');
+const { addTask, viewAssignedTasks, deleteTask } = require('../controllers/taskController');
 const router = express.Router();
 
 // HRM
@@ -38,5 +39,10 @@ router.get("/user/attendance/notIn/:date", getEmployeeByDateAttendance);
 router.get("/user/attendance/in/:date", getEmployeeByDateAttended);
 router.post("/user/attendance/manual", addAttendanceManual);
 router.post("/user/attendance", addAttendance);
+
+// TASK
+router.post("/user/task", addTask);
+router.get("/user/task", viewAssignedTasks);
+router.delete("/user/task", deleteTask);
 
 module.exports = router;
