@@ -8,7 +8,8 @@ const task_tbl = sequelize.define('task_tbl', {
     type: DataTypes.UUID,
     primaryKey: true,
     defaultValue: DataTypes.UUIDV4,
-    allowNull: false
+    allowNull: false,
+    unique: true,
   },
   taskName: {
     type: DataTypes.STRING(50),
@@ -21,6 +22,11 @@ const task_tbl = sequelize.define('task_tbl', {
   dueDate: {
     type: DataTypes.DATEONLY,
     allowNull: false,
+  },
+  taskCompleted: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
   },
   createdAt: {
     type: DataTypes.DATE,

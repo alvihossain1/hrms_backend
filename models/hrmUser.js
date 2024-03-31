@@ -6,8 +6,8 @@ const hrmUser_tbl = sequelize.define('hrmUser_tbl', {
     primaryKey: true,
     type: DataTypes.UUID,
     defaultValue: DataTypes.UUIDV4,
+    allowNull: false,
     unique: true,
-    allowNull: false
   },  
   email: {
     type: DataTypes.STRING(30),

@@ -6,7 +6,8 @@ const department_tbl = sequelize.define('department_tbl', {
     type: DataTypes.UUID,
     primaryKey: true,
     defaultValue: DataTypes.UUIDV4,
-    allowNull: false
+    allowNull: false,
+    unique: true,
   },
   departmentName: {
     type: DataTypes.STRING(80),

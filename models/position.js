@@ -6,7 +6,8 @@ const position_tbl = sequelize.define('position_tbl', {
     type: DataTypes.UUID,
     primaryKey: true,
     defaultValue: DataTypes.UUIDV4,
-    allowNull: false
+    allowNull: false,
+    unique: true,
   },
   positionName: {
     type: DataTypes.STRING(80),

@@ -43,6 +43,20 @@ exports.addTask = async (req, res) => {
     }
   };
 
+  exports.changeTaskStatus = async (req, res) => {
+    try {
+      const data = req.body
+      console.log(data);
+      const task_data = await task_tbl.findByPk(data.taskId);
+      task_data.taskCompleted = data.status;
+      task_data.save();
+      res.send({status: 200, data: `Task status changed ${data.status ? 'Done' : 'Undone'}`});
+      
+    } catch (error) {
+      res.send({status: 500, data: "There was an error."});
+    }
+  };
+
   exports.deleteTask = async (req, res) => {
     try {
       const data = req.body

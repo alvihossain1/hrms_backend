@@ -7,7 +7,8 @@ const attendance_tbl = sequelize.define('attendance_tbl', {
     type: DataTypes.UUID,
     primaryKey: true,
     defaultValue: DataTypes.UUIDV4,
-    allowNull: false
+    allowNull: false,
+    unique: true,
   },
   date: {
     type: DataTypes.DATEONLY,

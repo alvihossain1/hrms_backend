@@ -7,7 +7,8 @@ const salary_tbl = sequelize.define('salary_tbl', {
     type: DataTypes.UUID,
     primaryKey: true,
     defaultValue: DataTypes.UUIDV4,
-    allowNull: false
+    allowNull: false,
+    unique: true,
   },
   baseSalary: {
     type: DataTypes.STRING(50),
