@@ -41,9 +41,9 @@ const salary_tbl = sequelize.define('salary_tbl', {
     defaultValue: DataTypes.NOW,
   },
 }
-// ,{
-//   alter: true
-// }
+  // ,{
+  //   alter: true
+  // }
 
 );
 

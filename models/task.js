@@ -39,9 +39,9 @@ const task_tbl = sequelize.define('task_tbl', {
     defaultValue: DataTypes.NOW,
   },
 }
-// ,{
-//   alter: true
-// }
+  // ,{
+  //   alter: true
+  // }
 
 );
 
@@ -62,19 +62,19 @@ task_tbl.belongsTo(employee_tbl, {
 });
 
 hrmUser_tbl.hasMany(task_tbl, {
-    foreignKey: {
-      name: "hrmUserId",
-      type: DataTypes.UUID,
-    },
-    onDelete: 'CASCADE',
-    onUpdate: "CASCADE",
-    hooks: true,
-  })
-  
-  task_tbl.belongsTo(hrmUser_tbl, {
-    foreignKey: {
-      name: "hrmUserId",
-    }
-  });
+  foreignKey: {
+    name: "hrmUserId",
+    type: DataTypes.UUID,
+  },
+  onDelete: 'CASCADE',
+  onUpdate: "CASCADE",
+  hooks: true,
+})
+
+task_tbl.belongsTo(hrmUser_tbl, {
+  foreignKey: {
+    name: "hrmUserId",
+  }
+});
 
 module.exports = { task_tbl };

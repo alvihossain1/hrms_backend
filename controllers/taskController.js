@@ -43,6 +43,22 @@ exports.addTask = async (req, res) => {
     }
   };
 
+  exports.updateTask = async (req, res) => {
+    try {
+      const data = req.body
+      console.log(data);
+      const task_data = await task_tbl.findByPk(data.taskId);
+      task_data.taskName = data.taskName;
+      task_data.taskDetails = data.taskDetails;
+      task_data.dueDate = data.dueDate;
+      task_data.save();
+      res.send({status: 200, data: "Task updated"});
+      
+    } catch (error) {
+      res.send({status: 500, data: "There was an error."});
+    }
+  };
+
   exports.changeTaskStatus = async (req, res) => {
     try {
       const data = req.body
@@ -64,7 +80,6 @@ exports.addTask = async (req, res) => {
       const db_data = await task_tbl.destroy({
         where: {
           taskId: data.taskId,
-          employeeId: data.employeeId,
         },
       });   
       res.send({status: 200, data: "Task Deletd"});

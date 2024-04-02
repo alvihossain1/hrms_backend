@@ -28,12 +28,12 @@ const position_tbl = sequelize.define('position_tbl', {
     defaultValue: DataTypes.NOW,
   },
 }
-// ,{
-//   alter: true
-// }
-// ,{
-//   force: true
-// }
+  // ,{
+  //   alter: true
+  // }
+  // ,{
+  //   force: true
+  // }
 
 );
 
