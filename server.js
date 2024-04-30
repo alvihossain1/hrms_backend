@@ -19,6 +19,9 @@ app.get('/', (req, res) => {
 const path = require('path');
 app.use('/public', express.static(path.join(__dirname, 'public')))
 
+// const automation = require("./lib/schedule")
+// automation.everyday();
+
 const port = 4000;
 
 sequelize.sync().then(() => {

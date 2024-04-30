@@ -38,7 +38,7 @@ exports.addAttendance = async (req, res) => {
       const db_data = await sequelize.query(`SELECT employeeId, fname, lname, email, image_url FROM employee_tbls WHERE employeeId NOT IN (
         SELECT employeeId FROM attendance_tbls WHERE date = '${date}'
       )`);
-      if (db_data[0].length === 0 === 0) {
+      if (db_data[0].length === 0) {
         res.send({ status: 0, data: [] })
       }
       else {
@@ -117,6 +117,23 @@ exports.addAttendance = async (req, res) => {
       }
 
 
+    } catch (error) {
+      res.send({status: 500, data: "There was an error."});
+    }
+  };
+
+  exports.getAttendanceChartData = async (req, res) => {
+    try {
+      let month = req.params.month;    
+
+      const db_data = await sequelize.query(`SELECT DISTINCT date, COUNT(date) AS number FROM attendance_tbls WHERE date BETWEEN "${month}-01" AND "${month}-31" GROUP BY date ORDER BY date;'
+      )`);
+      if (db_data[0].length === 0 ) {
+        res.send({ status: 0, data: [] })
+      }
+      else {        
+        res.send({ status: 200, data: db_data[0] });
+      }
     } catch (error) {
       res.send({status: 500, data: "There was an error."});
     }

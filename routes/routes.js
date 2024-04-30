@@ -5,7 +5,7 @@ const { addDepartment, getDepartments, deleteDepartment } = require('../controll
 const { addPosition, getPositions, deletePosition } = require('../controllers/positionController');
 const { multerHrmProfileUpload, multerEmployeeProfileUpload } = require('../controllers/uploadsController');
 const { addSalary, updateSalary } = require('../controllers/salaryController');
-const { addAttendance, getEmployeeByDateAttendance, getEmployeeByDateAttended, addAttendanceManual } = require('../controllers/attendanceController');
+const { addAttendance, getEmployeeByDateAttendance, getEmployeeByDateAttended, addAttendanceManual, getAttendanceChartData } = require('../controllers/attendanceController');
 const { addTask, viewAssignedTasks, deleteTask, changeTaskStatus, updateTask } = require('../controllers/taskController');
 const { assignLeave, viewAssignedLeaveApp, deleteLeaveApp, updateLeaveApp } = require('../controllers/leaveController');
 const router = express.Router();
@@ -38,6 +38,7 @@ router.put("/user/salary", updateSalary);
 // ATTENDANCE
 router.get("/user/attendance/notIn/:date", getEmployeeByDateAttendance);
 router.get("/user/attendance/in/:date", getEmployeeByDateAttended);
+router.get("/user/attendance/charts/:month", getAttendanceChartData);
 router.post("/user/attendance/manual", addAttendanceManual);
 router.post("/user/attendance", addAttendance);
 
