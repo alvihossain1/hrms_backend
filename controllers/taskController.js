@@ -88,3 +88,20 @@ exports.addTask = async (req, res) => {
       res.send({status: 500, data: "There was an error."});
     }
   };
+
+  exports.getAllTasksStatus = async (req, res) => {
+    try {
+      const task_data = await task_tbl.findAll({
+        attributes: ['taskCompleted']
+      });
+      if (task_data.length === 0) {
+        res.send({ status: 0, data: [] })
+      }
+      else{
+        res.send({status: 200, data: task_data});
+      }
+      
+    } catch (error) {
+      res.send({status: 500, data: "There was an error."});
+    }
+  };

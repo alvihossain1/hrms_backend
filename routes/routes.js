@@ -6,7 +6,7 @@ const { addPosition, getPositions, deletePosition } = require('../controllers/po
 const { multerHrmProfileUpload, multerEmployeeProfileUpload } = require('../controllers/uploadsController');
 const { addSalary, updateSalary } = require('../controllers/salaryController');
 const { addAttendance, getEmployeeByDateAttendance, getEmployeeByDateAttended, addAttendanceManual, getAttendanceChartData } = require('../controllers/attendanceController');
-const { addTask, viewAssignedTasks, deleteTask, changeTaskStatus, updateTask } = require('../controllers/taskController');
+const { addTask, viewAssignedTasks, deleteTask, changeTaskStatus, updateTask, getAllTasksStatus } = require('../controllers/taskController');
 const { assignLeave, viewAssignedLeaveApp, deleteLeaveApp, updateLeaveApp } = require('../controllers/leaveController');
 const router = express.Router();
 
@@ -44,6 +44,7 @@ router.post("/user/attendance", addAttendance);
 
 // TASK
 router.put("/user/task/complete", changeTaskStatus);
+router.get("/user/task/charts", getAllTasksStatus);
 router.put("/user/task", updateTask);
 router.post("/user/task", addTask);
 router.get("/user/task", viewAssignedTasks);
