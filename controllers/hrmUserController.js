@@ -1,5 +1,7 @@
 const { hrmUser_tbl } = require('../models/hrmUser');
 const fs = require('fs');
+const { moduleAccess_tbl } = require('../models/moduleAccess');
+const { getModule } = require('./moduleAccessController');
 
 exports.hrmUserRegister = async (req, res) => {
   try {
@@ -7,13 +9,25 @@ exports.hrmUserRegister = async (req, res) => {
     const file = req.file;
     const id = file.filename.split(".")[0]
     let url = file.destination + "/" + file.filename;
+    // Module Handling
+    let idString = id.toString();
+    let moduleId = idString.slice(2, idString.length);
+    moduleId = "92"+moduleId;
+
     const [db_user, created] = await hrmUser_tbl.findOrCreate({
       where: {email: user.email},
-      defaults: { userId: id, fname: user.fname, lname: user.lname, email: user.email, password: user.password, image_url: url },
+      defaults: { userId: id, fname: user.fname, lname: user.lname, email: user.email, password: user.password, image_url: url, moduleAccessId: moduleId },
     });
     console.log(db_user)
     if(created){
-      res.send({status: 200, data: "HRM Successfully Registered."});
+      let idString = id.toString();
+      let moduleId = idString.slice(2, idString.length);
+      moduleId = "92"+moduleId
+      const modulesAll = JSON.parse(user.moduleAccess);
+      const module_data = moduleAccess_tbl.create({moduleAccessId: moduleId, hrmUserId: id, ...modulesAll});
+      if(module_data){
+        res.send({status: 200, data: "HRM Successfully Registered."});
+      }
     }
     else{
       fs.unlinkSync(url);
@@ -27,27 +41,29 @@ exports.hrmUserRegister = async (req, res) => {
 exports.hrmUserLogin = async (req, res) => {
   try {
     console.log(req.body)
-    const db_data = await hrmUser_tbl.findAll({
+    const db_data = await hrmUser_tbl.findOne({
       attributes: ["email", "fname", "lname", "image_url", "userId", "password"],
       where: {        
-        email: req.body.email.toString(),
+        email: req.body.email,
       },
     });
-    if(db_data[0].length === 0){
+
+    const moduleAccess_data = await getModule(db_data.userId);
+    if(db_data.length === 0){
       res.send({status: 500, data: "not found"})
     }
     else{
-      let data_arr = JSON.parse(JSON.stringify(db_data));
-      data_arr = data_arr.filter(data => {
-        data.image_url = process.env.SERVER_URL+"/"+data.image_url;
-        return data;
-      });
-      console.log(data_arr)
-      res.send({status: 200, data: data_arr[0]})
+      let data_obj = JSON.parse(JSON.stringify(db_data));
+      let image_url = process.env.SERVER_URL+"/"+data_obj.image_url;
+      data_obj = {...data_obj, image_url, moduleAccess: moduleAccess_data}
+
+      res.send({status: 200, data: data_obj})
     }
     
-    // res.send({status: 200, data: "Login Successful."});
   } catch (error) {
     res.send({status: 500, data: "There was an error during the registration process"});
   }
 };
+
+
+

@@ -79,7 +79,7 @@ exports.getEmployeeDataMinFields = async (req, res) => {
   try {
     console.log(req.body)
     const db_data = await employee_tbl.findAll(
-      {attributes: ['employeeId', 'fname', 'lname', 'email', 'image_url']}
+      {attributes: ['employeeId', 'fname', 'lname', 'email', 'contactNo', 'image_url']}
     );
     if (db_data[0].length === 0) {
       res.send({ status: 0, data: "not found" })
@@ -105,12 +105,15 @@ exports.updateEmployee = async (req, res) => {
     if (emp_data !== null) {
       emp_data.fname = user.fname;
       emp_data.lname = user.lname;
+      emp_data.email = user.email;
       emp_data.contactNo = user.contactNo;
+      emp_data.dob = user.dob;
       emp_data.address = user.address;
       emp_data.stateName = user.stateName;
       emp_data.employeeStatus = user.employeeStatus;
       emp_data.departmentName = user.departmentName;
       emp_data.positionName = user.positionName;
+      emp_data.hiringDate = user.hiringDate;
       emp_data.terminationDate = user.terminationDate;
 
       emp_data.save();

@@ -1,3 +1,4 @@
+const { createAttendanceReport } = require('../lib/attendanceReport');
 const { attendance_tbl } = require('../models/attendance');
 const sequelize = require('../models/db');
 const { employee_tbl } = require('../models/employee');
@@ -126,8 +127,7 @@ exports.addAttendance = async (req, res) => {
     try {
       let month = req.params.month;    
 
-      const db_data = await sequelize.query(`SELECT DISTINCT date, COUNT(date) AS number FROM attendance_tbls WHERE date BETWEEN "${month}-01" AND "${month}-31" GROUP BY date ORDER BY date;'
-      )`);
+      const db_data = await sequelize.query(`SELECT DISTINCT date, COUNT(date) AS number FROM attendance_tbls WHERE date BETWEEN "${month}-01" AND "${month}-31" GROUP BY date ORDER BY date`);
       if (db_data[0].length === 0 ) {
         res.send({ status: 0, data: [] })
       }
@@ -139,27 +139,22 @@ exports.addAttendance = async (req, res) => {
     }
   };
 
-//   exports.updateSalary = async (req, res) => {
-//     try {
-//       const data = req.body
-//       console.log(data);
-      
-//       const salary_data = await salary_tbl.findByPk(data.salaryId);
-//       if(salary_data !== null){
-//         salary_data.baseSalary = data.baseSalary;
-//         salary_data.bonus = data.bonus;
-//         salary_data.allowance = data.allowance;
-//         salary_data.benefits = data.benefits;
-//         salary_data.total = data.total;
-        
-//         salary_data.save();
-//         res.send({ status: 200, data: "Salary record updated successfully." });
+  exports.getEmployeeMonthlyAttendance = async (req, res) => {
+    try {
+      console.log(req.params)
+      const month = req.params.month;    
+      const employeeId = req.params.id
 
-//       }
-//       else{
-//         res.send({ status: 500, data: "Data Found error." });
-//       }      
-//     } catch (error) {
-//       res.send({status: 500, data: "There was an error."});
-//     }
-//   };
+      const db_data = await sequelize.query(`SELECT date, clockInTime, clockOutTime, hoursWorked FROM attendance_tbls WHERE employeeId = '${employeeId}' AND DATE BETWEEN '${month}-01' AND '${month}-31' ORDER BY date`);
+      if (db_data[0].length === 0 ) {
+        res.send({ status: 0, data: [] })
+      }
+      else {  
+        const newData = createAttendanceReport(month, db_data[0])      
+        res.send({ status: 200, data: newData });
+      }
+    } catch (error) {
+      res.send({status: 500, data: "There was an error."});
+    }
+  };
+

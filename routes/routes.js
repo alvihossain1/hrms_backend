@@ -5,9 +5,11 @@ const { addDepartment, getDepartments, deleteDepartment } = require('../controll
 const { addPosition, getPositions, deletePosition } = require('../controllers/positionController');
 const { multerHrmProfileUpload, multerEmployeeProfileUpload } = require('../controllers/uploadsController');
 const { addSalary, updateSalary } = require('../controllers/salaryController');
-const { addAttendance, getEmployeeByDateAttendance, getEmployeeByDateAttended, addAttendanceManual, getAttendanceChartData } = require('../controllers/attendanceController');
+const { addAttendance, getEmployeeByDateAttendance, getEmployeeByDateAttended, addAttendanceManual, getAttendanceChartData, getEmployeeMonthlyAttendance } = require('../controllers/attendanceController');
 const { addTask, viewAssignedTasks, deleteTask, changeTaskStatus, updateTask, getAllTasksStatus } = require('../controllers/taskController');
 const { assignLeave, viewAssignedLeaveApp, deleteLeaveApp, updateLeaveApp } = require('../controllers/leaveController');
+const { adminUserLogin, getAllHrUsers, updateHrmUserFields, updateHrmUserPassword } = require('../controllers/adminController');
+const { updateHrmUserModule } = require('../controllers/moduleAccessController');
 const router = express.Router();
 
 // HRM
@@ -36,6 +38,7 @@ router.post("/user/salary", addSalary);
 router.put("/user/salary", updateSalary);
 
 // ATTENDANCE
+router.get("/user/attendance/month/:month/id/:id", getEmployeeMonthlyAttendance);
 router.get("/user/attendance/notIn/:date", getEmployeeByDateAttendance);
 router.get("/user/attendance/in/:date", getEmployeeByDateAttended);
 router.get("/user/attendance/charts/:month", getAttendanceChartData);
@@ -55,5 +58,13 @@ router.post("/user/leave", assignLeave);
 router.get("/user/leave", viewAssignedLeaveApp);
 router.put("/user/leave", updateLeaveApp);
 router.delete("/user/leave", deleteLeaveApp);
+
+// ADMIN
+router.post("/admin/login", adminUserLogin);
+router.post("/admin/hrUser/updateFields", updateHrmUserFields);
+router.post("/admin/hrUser/updatePassword", updateHrmUserPassword);
+router.post("/admin/hrUser/updateModule", updateHrmUserModule);
+router.get("/admin/hrUser", getAllHrUsers);
+
 
 module.exports = router;

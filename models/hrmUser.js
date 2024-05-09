@@ -32,6 +32,11 @@ const hrmUser_tbl = sequelize.define('hrmUser_tbl', {
     type: DataTypes.TEXT,
     allowNull: false,
   },
+  moduleAccessId: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    allowNull: true,
+  },  
   createdAt: {
     type: DataTypes.DATE,
     allowNull: false,
