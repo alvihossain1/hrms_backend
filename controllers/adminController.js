@@ -27,7 +27,7 @@ exports.getAllHrUsers = async (req, res) => {
     try {
       console.log(req.body)
       const db_data = await hrmUser_tbl.findAll({
-        include: { model: moduleAccess_tbl},
+        include: [{ model: moduleAccess_tbl, attributes: {exclude: ['moduleAccessId', 'hrmUserId', 'email', 'createdAt', 'updatedAt']}}],
         attributes: ["email", "fname", "lname", "image_url", "userId"],
       });
       if (db_data[0].length === 0) {

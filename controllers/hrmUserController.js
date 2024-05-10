@@ -8,15 +8,11 @@ exports.hrmUserRegister = async (req, res) => {
     const user = JSON.parse(req.body.user);
     const file = req.file;
     const id = file.filename.split(".")[0]
-    let url = file.destination + "/" + file.filename;
-    // Module Handling
-    let idString = id.toString();
-    let moduleId = idString.slice(2, idString.length);
-    moduleId = "92"+moduleId;
+    let url = file.destination + "/" + file.filename;    
 
     const [db_user, created] = await hrmUser_tbl.findOrCreate({
       where: {email: user.email},
-      defaults: { userId: id, fname: user.fname, lname: user.lname, email: user.email, password: user.password, image_url: url, moduleAccessId: moduleId },
+      defaults: { userId: id, fname: user.fname, lname: user.lname, email: user.email, password: user.password, image_url: url },
     });
     console.log(db_user)
     if(created){
