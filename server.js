@@ -12,8 +12,7 @@ const routes = require("./routes/routes");
 app.use(routes);
 
 app.get('/', (req, res) => {
-    res.set('Content-Type', 'text/html; charset=utf-8');
-    res.send("<h1 style='text-align: center; background-color: olive;'>Homepage here! yay!</h1>");
+    res.send({status: 200, data: "Server Running Okay!"})
 })
 
 const path = require('path');
