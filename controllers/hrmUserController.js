@@ -44,11 +44,11 @@ exports.hrmUserLogin = async (req, res) => {
       },
     });
 
-    const moduleAccess_data = await getModule(db_data.userId);
-    if(db_data.length === 0){
-      res.send({status: 500, data: "not found"})
+    if(!db_data){
+      res.send({status: 0, data: []})
     }
     else{
+      const moduleAccess_data = await getModule(db_data.userId);
       let data_obj = JSON.parse(JSON.stringify(db_data));
       let image_url = process.env.SERVER_URL+"/"+data_obj.image_url;
       data_obj = {...data_obj, image_url, moduleAccess: moduleAccess_data}
@@ -57,9 +57,74 @@ exports.hrmUserLogin = async (req, res) => {
     }
     
   } catch (error) {
-    res.send({status: 500, data: "There was an error during the registration process"});
+    res.send({status: 500, data: "There was an error"});
   }
 };
 
+// HR FUNCTIONS
+exports.getAllHrUsers = async (req, res) => {
+  try {
+    console.log(req.body)
+    const db_data = await hrmUser_tbl.findAll({
+      include: [{ model: moduleAccess_tbl, attributes: {exclude: ['moduleAccessId', 'hrmUserId', 'email', 'createdAt', 'updatedAt']}}],
+      attributes: ["email", "fname", "lname", "image_url", "userId"],
+    });
+    if (db_data[0].length === 0) {
+      res.send({ status: 0, data: "not found" })
+    }
+    else {
+      let data_arr = JSON.parse(JSON.stringify(db_data));
+      data_arr = data_arr.filter(data => {
+        data.image_url = process.env.SERVER_URL + "/" + data.image_url;
+        return data;
+      });
+      res.send({ status: 200, data: data_arr });
+    }
+  } catch (error) {
+    res.send({ status: 500, data: "There was an error" });
+  }
+};
+
+exports.updateHrmUserFields = async (req, res) => {
+  try {
+    console.log(req.body);
+    const user = req.body;
+    const hr_data = await hrmUser_tbl.findByPk(user.userId);
+    if (hr_data !== null) {
+      hr_data.fname = user.fname;
+      hr_data.lname = user.lname;
+      hr_data.email = user.email;
+
+      hr_data.save();
+      res.send({ status: 200, data: "HR Employee Record Updated." });
+
+    } else {
+      res.send({ status: 500, data: "There was an error in finding data" });
+    }
+    
+  } catch (error) {
+    res.send({ status: 500, data: "There was an error" });
+  }
+};
+
+exports.updateHrmUserPassword = async (req, res) => {
+  try {
+    console.log(req.body);
+    const user = req.body;
+    const hr_data = await hrmUser_tbl.findByPk(user.userId);
+    if (hr_data !== null) {
+      hr_data.password = user.password;
+
+      hr_data.save();
+      res.send({ status: 200, data: "HR Employee Password Updated." });
+
+    } else {
+      res.send({ status: 500, data: "There was an error in finding data" });
+    }
+    
+  } catch (error) {
+    res.send({ status: 500, data: "There was an error" });
+  }
+};
 
 

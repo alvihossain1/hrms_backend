@@ -1,5 +1,5 @@
 const express = require('express');
-const { hrmUserRegister , hrmUserLogin } = require('../controllers/hrmUserController');
+const { hrmUserRegister , hrmUserLogin, getAllHrUsers, updateHrmUserFields, updateHrmUserPassword } = require('../controllers/hrmUserController');
 const { employeeRegistration, getEmployeeData, updateEmployee, removeEmployee, getEmployeeDataMinFields } = require('../controllers/employeeController');
 const { addDepartment, getDepartments, deleteDepartment } = require('../controllers/departmentController');
 const { addPosition, getPositions, deletePosition } = require('../controllers/positionController');
@@ -8,7 +8,7 @@ const { addSalary, updateSalary } = require('../controllers/salaryController');
 const { addAttendance, getEmployeeByDateAttendance, getEmployeeByDateAttended, addAttendanceManual, getAttendanceChartData, getEmployeeMonthlyAttendance } = require('../controllers/attendanceController');
 const { addTask, viewAssignedTasks, deleteTask, changeTaskStatus, updateTask, getAllTasksStatus } = require('../controllers/taskController');
 const { assignLeave, viewAssignedLeaveApp, deleteLeaveApp, updateLeaveApp } = require('../controllers/leaveController');
-const { adminUserLogin, getAllHrUsers, updateHrmUserFields, updateHrmUserPassword } = require('../controllers/adminController');
+const { adminUserLogin } = require('../controllers/adminController');
 const { updateHrmUserModule } = require('../controllers/moduleAccessController');
 const router = express.Router();
 

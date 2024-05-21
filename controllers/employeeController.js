@@ -71,7 +71,7 @@ exports.getEmployeeData = async (req, res) => {
       res.send({ status: 200, data: data_arr });
     }
   } catch (error) {
-    res.send({ status: 500, data: "There was an error during the registration process" });
+    res.send({ status: 500, data: "There was an error" });
   }
 };
 
@@ -93,7 +93,7 @@ exports.getEmployeeDataMinFields = async (req, res) => {
       res.send({ status: 200, data: data_arr });
     }
   } catch (error) {
-    res.send({ status: 500, data: "There was an error during the registration process" });
+    res.send({ status: 500, data: "There was an error" });
   }
 };
 
