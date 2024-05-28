@@ -127,4 +127,29 @@ exports.updateHrmUserPassword = async (req, res) => {
   }
 };
 
+exports.removeHREmployee = async (req, res) => {
+  try {
+    const user = req.body;
+    const url = "public"+user.image_url.split("public")[1];
+    console.log(user);
+    const db_data = await hrmUser_tbl.destroy({
+      where: {
+        userId: user.userId
+      },
+    });
+    if (db_data === 1) {
+      try{
+        fs.unlinkSync(url);
+      }
+      catch(err){}
+      res.send({ status: 200, data: db_data });
+    }
+    else {
+      res.send({ status: 300, data: db_data });
+    }
+  } catch (error) {
+    res.send({ status: 500, data: "There was an error." });
+  }
+};
+
 

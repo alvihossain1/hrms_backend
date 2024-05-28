@@ -1,5 +1,5 @@
 const express = require('express');
-const { hrmUserRegister , hrmUserLogin, getAllHrUsers, updateHrmUserFields, updateHrmUserPassword } = require('../controllers/hrmUserController');
+const { hrmUserRegister , hrmUserLogin, getAllHrUsers, updateHrmUserFields, updateHrmUserPassword, removeHREmployee } = require('../controllers/hrmUserController');
 const { employeeRegistration, getEmployeeData, updateEmployee, removeEmployee, getEmployeeDataMinFields } = require('../controllers/employeeController');
 const { addDepartment, getDepartments, deleteDepartment } = require('../controllers/departmentController');
 const { addPosition, getPositions, deletePosition } = require('../controllers/positionController');
@@ -65,6 +65,7 @@ router.post("/admin/hrUser/updateFields", updateHrmUserFields);
 router.post("/admin/hrUser/updatePassword", updateHrmUserPassword);
 router.post("/admin/hrUser/updateModule", updateHrmUserModule);
 router.get("/admin/hrUser", getAllHrUsers);
+router.delete("/admin/hrUser", removeHREmployee);
 
 
 module.exports = router;

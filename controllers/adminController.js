@@ -1,6 +1,4 @@
 const { adminArr } = require("../lib/constants");
-const { hrmUser_tbl } = require("../models/hrmUser");
-const { moduleAccess_tbl } = require("../models/moduleAccess");
 
 exports.adminUserLogin = async (req, res) => {
     try {
