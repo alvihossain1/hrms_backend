@@ -1,3 +1,4 @@
+const sequelize = require('../models/db');
 const { department_tbl } = require('../models/department');
 
 exports.addDepartment = async (req, res) => {
@@ -57,4 +58,20 @@ exports.addDepartment = async (req, res) => {
         res.send({status: 500, data: "There was an error."});
       }
    
+  };
+
+  exports.getDepartmentChartData = async (req, res) => {
+    try {
+      const db_data = await sequelize.query(`SELECT departmentName, COUNT(departmentName) AS number FROM employee_tbls WHERE departmentName IN 
+      (SELECT departmentName from department_tbls) GROUP BY departmentName ORDER BY departmentName`);
+      if(db_data[0].length === 0){
+        res.send({status: 0, data: []})
+      }
+      else{
+        res.send({status: 200, data: db_data[0]})
+      }
+      
+    } catch (error) {
+      res.send({status: 500, data: "There was an error."});
+    }
   };

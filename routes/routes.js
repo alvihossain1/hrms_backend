@@ -1,8 +1,8 @@
 const express = require('express');
 const { hrmUserRegister , hrmUserLogin, getAllHrUsers, updateHrmUserFields, updateHrmUserPassword, removeHREmployee } = require('../controllers/hrmUserController');
 const { employeeRegistration, getEmployeeData, updateEmployee, removeEmployee, getEmployeeDataMinFields } = require('../controllers/employeeController');
-const { addDepartment, getDepartments, deleteDepartment } = require('../controllers/departmentController');
-const { addPosition, getPositions, deletePosition } = require('../controllers/positionController');
+const { addDepartment, getDepartments, deleteDepartment, getDepartmentChartData } = require('../controllers/departmentController');
+const { addPosition, getPositions, deletePosition, getPositionChartData } = require('../controllers/positionController');
 const { multerHrmProfileUpload, multerEmployeeProfileUpload } = require('../controllers/uploadsController');
 const { addSalary, updateSalary } = require('../controllers/salaryController');
 const { addAttendance, getEmployeeByDateAttendance, getEmployeeByDateAttended, addAttendanceManual, getAttendanceChartData, getEmployeeMonthlyAttendance } = require('../controllers/attendanceController');
@@ -19,11 +19,13 @@ router.post("/hrmUserLogin", hrmUserLogin);
 // DEPARTMENT
 router.delete("/user/department/:id", deleteDepartment);
 router.post("/user/department", addDepartment);
+router.get("/user/department/charts", getDepartmentChartData);
 router.get("/user/department", getDepartments);
 
 // POSITION
 router.delete("/user/position/:id", deletePosition);
 router.post("/user/position", addPosition);
+router.get("/user/position/charts", getPositionChartData);
 router.get("/user/position", getPositions);
 
 // EMPLOYEE

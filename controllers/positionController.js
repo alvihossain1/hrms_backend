@@ -1,3 +1,4 @@
+const sequelize = require('../models/db');
 const { position_tbl } = require('../models/position');
 
 exports.addPosition = async (req, res) => {
@@ -58,4 +59,20 @@ exports.addPosition = async (req, res) => {
         res.send({status: 500, data: "There was an error."});
       }
    
+  };
+
+  exports.getPositionChartData = async (req, res) => {
+    try {
+      const db_data = await sequelize.query(`SELECT positionName, COUNT(positionName) AS number FROM employee_tbls WHERE positionName IN 
+      (SELECT positionName from position_tbls) GROUP BY positionName ORDER BY positionName`);
+      if(db_data[0].length === 0){
+        res.send({status: 0, data: []})
+      }
+      else{
+        res.send({status: 200, data: db_data[0]})
+      }
+      
+    } catch (error) {
+      res.send({status: 500, data: "There was an error."});
+    }
   };

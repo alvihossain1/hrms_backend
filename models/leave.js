@@ -65,7 +65,7 @@ hrmUser_tbl.hasMany(leave_tbl, {
         name: "hrmUserId",
         type: DataTypes.UUID,
     },
-    onDelete: 'CASCADE',
+    onDelete: 'SET NULL',
     onUpdate: "CASCADE",
     hooks: true,
 })

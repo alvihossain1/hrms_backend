@@ -82,7 +82,7 @@ exports.addTask = async (req, res) => {
           taskId: data.taskId,
         },
       });   
-      res.send({status: 200, data: "Task Deletd"});
+      res.send({status: 200, data: "Task Deleted"});
       
     } catch (error) {
       res.send({status: 500, data: "There was an error."});

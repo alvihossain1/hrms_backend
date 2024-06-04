@@ -12,17 +12,6 @@ exports.updateHrmUserModule = async (req, res) => {
     try {
       console.log(req.body);
       const modules = req.body.moduleAccess;
-    //   const [db_data, created] = await moduleAccess_tbl.findOrCreate({
-    //     where: {hrmUserId: req.body.userId},
-    //     defaults: {
-    //         attendanceId: id,
-    //         date: data.date,
-    //         clockInTime: data.clockInTime,
-    //         clockOutTime: data.clockOutTime,
-    //         hoursWorked: data.hoursWorked,
-    //         employeeId: data.employeeId,
-    //     }
-    //   })
       const module_data = await moduleAccess_tbl.findOne({where: {hrmUserId: req.body.userId}});
       if (module_data !== null) {
         module_data.dept_pos = modules.dept_pos;  

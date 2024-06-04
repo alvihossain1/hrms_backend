@@ -66,7 +66,7 @@ hrmUser_tbl.hasMany(task_tbl, {
     name: "hrmUserId",
     type: DataTypes.UUID,
   },
-  onDelete: 'CASCADE',
+  onDelete: 'SET NULL',
   onUpdate: "CASCADE",
   hooks: true,
 })
